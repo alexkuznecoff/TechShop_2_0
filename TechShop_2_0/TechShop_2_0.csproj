@@ -43,11 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Laptop.cs" />
+    <Compile Include="Models\MobilePhone.cs" />
+    <Compile Include="Models\OperationSystem.cs" />
+    <Compile Include="Models\OSDevise.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Store.cs" />
+    <Compile Include="Models\Tablet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
