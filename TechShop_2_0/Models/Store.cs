@@ -9,13 +9,18 @@ namespace TechShop_2_0.Models
 {
     public class Store
     {
-        public double Balance = 1000; // USD
+        public double Balance = 10000; // USD
 
-        public List<Product> Products { get; set; }
+        private List<Product> Products { get; set; }
+
+        private SalesReportData SalesReport { get; set; }
 
         public Store()
         {
             Products = new List<Product>();
+
+            SalesReport = new SalesReportData();
+
             var lines = File.ReadAllLines("SampleData.txt");  
 
             foreach (var line in lines)
@@ -72,6 +77,21 @@ namespace TechShop_2_0.Models
             }
         }
 
+        public void AddProduct(Product product)
+        {
+            if (Balance < product.Price)
+            {
+                return;
+            }
+
+            SalesReport.AddsCount++;
+            SalesReport.Spends += product.Price;
+
+            product.Price *= 1.2;
+            Products.Add(product);
+            Balance -= product.Price;
+        }
+
         public void SellProduct(int productId)
         {
             var product = Products.FirstOrDefault(p => p.Id == productId);
@@ -79,8 +99,43 @@ namespace TechShop_2_0.Models
             if (product == null)
                 return;
 
+            SalesReport.SalesCount++;
+            SalesReport.Income += product.Price;
+
             Balance += product.Price;
-            Products.Remove(product);
+            Products.Remove(product);  
+        }
+
+        public List<Product> FindProducts(string filter)
+        {
+            List<Product> findProducts = new List<Product>();
+
+            foreach(var product in Products)
+            {
+                if(product.Id.ToString().Contains(filter)|| product.Manufacturer.Contains(filter)
+                    || product.ModelName.Contains(filter)||product.ProductionYear.ToString().Contains(filter)
+                    || product.Price.ToString().Contains(filter))
+                {
+                    findProducts.Add(product);
+                   // return findProducts;
+                }
+            }
+            return findProducts;
+        }
+
+        public List<Product> GetAllProducts()
+        {
+            return Products;
+        }
+
+        public Product GetProduct(int productId)
+        {
+            return Products.FirstOrDefault(p => p.Id == productId);
+        }
+
+        public SalesReportData GetSalesReport()
+        {
+            return SalesReport;
         }
     }
 }

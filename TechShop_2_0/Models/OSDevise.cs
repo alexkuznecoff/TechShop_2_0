@@ -15,7 +15,7 @@ namespace TechShop_2_0.Models
             if (IsInlinePrint)
             {
                 
-                Console.WriteLine($"{Id}, {Manufacturer} , {ModelName} : ({ProductionYear} year) | {OSType} - ${Price}");
+                Console.WriteLine($"{Id}, {Manufacturer} , {ModelName} : ({ProductionYear} year) :  {OSType} - {Price}$");
 
             }
             else

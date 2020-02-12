@@ -10,7 +10,7 @@ namespace TechShop_2_0.Models
     {
         Windows,
         Linux,
-        MackOS,
+        MacOS,
         IOS,
         Android,
         WindowsPhone

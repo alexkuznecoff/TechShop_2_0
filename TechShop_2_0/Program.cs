@@ -28,13 +28,13 @@ namespace TechShop_2_0
                         ShowItemsList();
                         break;
                     case 2:
-                        AddDevice();
+                        AddProduct();
                         break;
                     case 3:
-                        SellDevice();
+                        SellProduct();
                         break;
                     case 4:
-                        FindDevice();
+                        FindProduct();
                         break;
                     case 5:
                         ShowSalesReport();
@@ -46,7 +46,7 @@ namespace TechShop_2_0
                         ShowMenuItems();
                         continue;
                 }
-                Console.WriteLine("Press any key to return....");
+                Console.WriteLine("\n Press any key to return....");
                 Console.ReadKey();
                 ShowMenuItems();
             }
@@ -55,7 +55,7 @@ namespace TechShop_2_0
 
         private static void ShowItemsList()
         {
-            var products = store.Products;
+            var products = store.GetAllProducts();
 
             foreach (var product in products)
             {
@@ -70,22 +70,70 @@ namespace TechShop_2_0
 
         private static void ShowSalesReport()
         {
-            throw new NotImplementedException();
+            var report = store.GetSalesReport();
+
+            Console.Clear();
+
+            Console.WriteLine("Sales report :");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Income = {report.Income} $  , Operations {report.SalesCount}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Spends = {report.Spends}$ , Operations {report.AddsCount}");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"Current balance = {store.Balance}$");
+
         }
 
-        private static void FindDevice()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void SellDevice()
+        private static void FindProduct()
         {
             Console.Clear();
-            Console.Write("Please, enter product id to sell :");
-            var productId = int.Parse(Console.ReadLine());
+            Console.Write("Please, enter search filter :");
+            var filter = Console.ReadLine();
+            var resultProducts = store.FindProducts(filter);
+
+            if (resultProducts == null)
+            {
+                Console.WriteLine("Nothing was found...");
+                return;
+            }
+
+            Console.WriteLine("Products Found :");
+            foreach (var resultProduct in resultProducts)
+            {
+                resultProduct.Print(false);
+            }
         }
 
-        private static void AddDevice()
+        private static void SellProduct()
+        {
+            Console.Clear();
+            ShowItemsList();
+
+            Console.Write("\nPlease, enter product id to sell :");
+            var productId = int.Parse(Console.ReadLine());
+            var product = store.GetProduct(productId);
+
+            if (product == null)
+            {
+                Console.Clear();
+                Console.WriteLine($"Product with id {productId} was not found");
+                return;
+            }
+
+            Console.Clear();
+            product.Print(false);
+            Console.WriteLine("Are you sure (Y/N)");
+            var answer = Console.ReadLine() == "Y";
+
+            if (answer)
+            {
+                store.SellProduct(productId);
+            }
+            //Console.Clear();
+
+        }
+
+        private static void AddProduct()
         {
             Console.Clear();
             Console.WriteLine("What new product type do you want to add ? (L. laptop | M. mobole phone | T. tablet |) ");
@@ -140,7 +188,7 @@ namespace TechShop_2_0
                     Console.Write("Operation system: ");
                     Enum.TryParse(Console.ReadLine(), out OperationSystem laptopOS);
                     laptop.OSType = laptopOS;
-                    store.Products.Add(laptop);
+                    store.AddProduct(laptop);
 
                     break;
 
@@ -167,7 +215,7 @@ namespace TechShop_2_0
                     Console.Write("Operation system: ");
                     Enum.TryParse(Console.ReadLine(), out OperationSystem mobilePhoneOs);
                     mobilePhone.OSType = mobilePhoneOs;
-                    store.Products.Add(mobilePhone);
+                    store.AddProduct(mobilePhone);
 
                     break;
 
@@ -194,7 +242,7 @@ namespace TechShop_2_0
                     Console.Write("The tablet has Sim card ? (Y/N)");
                     var IsSimCardSupported = Console.ReadLine() == "Y";
                     tablet.IsSimCardSupported = IsSimCardSupported;
-                    store.Products.Add(tablet);
+                    store.AddProduct(tablet);
 
                     break;
             }
@@ -203,6 +251,7 @@ namespace TechShop_2_0
         static void ShowMenuItems()
         {
             Console.Clear();
+            Console.WriteLine($"Your balance : {store.Balance}");
             Console.WriteLine("Please, select option :");
             Console.WriteLine();
             Console.WriteLine("Storage: ");

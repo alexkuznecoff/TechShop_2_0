@@ -42,7 +42,7 @@ namespace TechShop_2_0.Models
             Console.WriteLine($"Manufacturer:    {Manufacturer}");
             Console.WriteLine($"Model name:      {ModelName}");
             Console.WriteLine($"Prodaction year: {ProductionYear}");
-            Console.WriteLine($"Price:           {Price}");
+            Console.WriteLine($"Price:           {Price} $");
         }
         
     }

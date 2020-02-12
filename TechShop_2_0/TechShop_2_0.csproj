@@ -48,6 +48,7 @@
     <Compile Include="Models\OperationSystem.cs" />
     <Compile Include="Models\OSDevise.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\SalesReportData.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Tablet.cs" />
     <Compile Include="Program.cs" />

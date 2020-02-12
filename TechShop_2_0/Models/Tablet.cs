@@ -17,7 +17,7 @@ namespace TechShop_2_0.Models
             {
                 var simCardInfo = IsSimCardSupported ? "Sim" : "";
 
-                Console.WriteLine($"{Id}, {Manufacturer} , {ModelName} : ({ProductionYear} year)  | {simCardInfo} - ${Price}");
+                Console.WriteLine($"{Id}, {Manufacturer} , {ModelName} : ({ProductionYear} year)  :  { simCardInfo} - {Price}$");
             }
             else
             {
